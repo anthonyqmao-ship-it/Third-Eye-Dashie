@@ -12,6 +12,8 @@ FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+# Ensure public exists so the runner stage can copy it (Next.js may not have one)
+RUN mkdir -p /app/public
 
 # Set build-time environment variables
 ARG NEXT_PUBLIC_API_URL=http://localhost:8000/api/v1

@@ -8,6 +8,7 @@ import {
   Inbox,
   CheckCircle2,
   Clock,
+  Crown,
   TrendingUp,
   Sparkles,
   SmilePlus,
@@ -750,29 +751,29 @@ export default function DashboardPage() {
         </CardHeader>
         <CardContent className="pt-0">
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-7 gap-3">
-            {Object.entries(categoryConfig).map(([key, cfg]) => {
-              const cat = data.categories[key]
-              const count = cat?.tickets?.length ?? 0
-              const latest = cat?.latest ?? null
+            {insightCards.map((card) => {
+              const insight = data.insights[card.key]
+              const count = insight?.count ?? 0
+              const latest = insight?.latest ?? null
               const isEmpty = count === 0
               return (
                 <Link
-                  key={key}
-                  href={`/tickets?topic=${key}`}
+                  key={card.key}
+                  href={card.href}
                   className={cn(
                     "group flex flex-col items-center gap-2 p-4 rounded-xl border bg-card transition-all duration-200",
                     isEmpty
                       ? "opacity-40 cursor-default pointer-events-none border-border/30"
                       : cn(
                           "hover:shadow-md hover:-translate-y-0.5",
-                          cfg.style,
-                          cfg.hover
+                          card.style,
+                          card.hover
                         )
                   )}
                 >
                   <div className="flex items-center gap-1.5 transition-transform group-hover:scale-105">
-                    {cfg.icon}
-                    <span className="text-xs font-medium">{cfg.label}</span>
+                    {card.icon}
+                    <span className="text-xs font-medium">{card.label}</span>
                   </div>
                   <span className="text-xl font-bold tabular-nums">
                     {count}
